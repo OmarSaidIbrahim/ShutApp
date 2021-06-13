@@ -9,4 +9,6 @@ and the library
 
 https://github.com/zmxv/react-native-sound
 
-to play any mp3 file
+to play any mp3 file.
+
+As usual, logic first and then graphic.
