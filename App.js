@@ -10,10 +10,13 @@ import {
 import NotifService from './NotifService';
 import Sound from 'react-native-sound';
 
+
 export default class App extends Component {
   constructor(props) {
     super(props);
-    this.state = {};
+    this.state = {
+      selectedTime: 10
+    };
 
     this.notif = new NotifService(
       this.onRegister.bind(this),
@@ -32,9 +35,16 @@ export default class App extends Component {
     return (
       <View style={styles.container}>
         <Text style={styles.title}>
-          Shut App
+          ShutApp
         </Text>
-        <TouchableOpacity
+        <Text style={{marginVertical: 20}}>How many times do I need to remind you to shut up ?</Text>
+        <Text>Every: </Text>
+      </View>
+    );
+  }
+
+  /*
+  <TouchableOpacity
           style={styles.button}
           onPress={() => {
             this.notif.localNotif();
@@ -67,9 +77,7 @@ export default class App extends Component {
           onPress={this.playSound}>
           <Text>Reminder</Text>
         </TouchableOpacity>
-      </View>
-    );
-  }
+   */
 
   onRegister(token) {
     this.setState({registerToken: token.token, fcmRegistered: true});
@@ -87,37 +95,14 @@ export default class App extends Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: 'center',
+    //justifyContent: 'center',
     alignItems: 'center',
     backgroundColor: 'white',
   },
-  welcome: {
-    fontSize: 20,
-    textAlign: 'center',
-    margin: 10,
-  },
-  button: {
-    borderWidth: 1,
-    borderColor: '#000000',
-    margin: 5,
-    padding: 5,
-    width: '70%',
-    backgroundColor: '#DDDDDD',
-    borderRadius: 5,
-  },
-  textField: {
-    borderWidth: 1,
-    borderColor: '#AAAAAA',
-    margin: 5,
-    padding: 5,
-    width: '70%',
-  },
-  spacer: {
-    height: 10,
-  },
   title: {
     fontWeight: 'bold',
-    fontSize: 20,
+    fontSize: 50,
     textAlign: 'center',
+    color: "purple"
   },
 });

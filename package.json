@@ -10,6 +10,7 @@
     "lint": "eslint ."
   },
   "dependencies": {
+    "@react-native-picker/picker": "^1.16.1",
     "react": "17.0.1",
     "react-native": "0.64.2",
     "react-native-push-notification": "^7.3.1",
