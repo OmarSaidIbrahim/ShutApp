@@ -6,16 +6,22 @@ import {
   View,
   TouchableOpacity,
   Alert,
+  Platform,
+  Button
 } from 'react-native';
 import NotifService from './NotifService';
 import Sound from 'react-native-sound';
+import DateTimePicker from '@react-native-community/datetimepicker';
 
 
 export default class App extends Component {
   constructor(props) {
     super(props);
+
     this.state = {
-      selectedTime: 10
+      date: new Date(),
+      mode: 'date',
+      show: false
     };
 
     this.notif = new NotifService(
@@ -26,6 +32,22 @@ export default class App extends Component {
     this.sound = new Sound('shutup.mp3');
   }
 
+  onChange = (event, selectedDate) => {
+    const currentDate = selectedDate || this.state.date;
+    this.setState({show: Platform.OS === 'ios', date: currentDate});
+  };
+
+  showMode = (currentMode) => {
+    this.setState({show: true, mode: currentMode});
+  };
+
+  showDatepicker = () => {
+    this.showMode('date');
+  };
+
+  showTimepicker = () => {
+    this.showMode('time');
+  };
 
   playSound = () => {
     this.sound.play()
@@ -39,6 +61,24 @@ export default class App extends Component {
         </Text>
         <Text style={{marginVertical: 20}}>How many times do I need to remind you to shut up ?</Text>
         <Text>Every: </Text>
+        <View>
+          <Button onPress={this.showDatepicker} title="Show date picker!" />
+        </View>
+        <View>
+          <Button onPress={this.showTimepicker} title="Show time picker!" />
+        </View>
+        {this.state.show && (
+          <DateTimePicker
+            testID="dateTimePicker"
+            value={this.state.date}
+            mode={this.state.mode}
+            is24Hour={true}
+            display="default"
+            onChange={this.onChange}
+            minimumDate={new Date()}
+          />
+        )}
+        <Text>{this.state.date.toLocaleString()}</Text>
       </View>
     );
   }
