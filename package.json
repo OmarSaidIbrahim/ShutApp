@@ -12,6 +12,7 @@
   "dependencies": {
     "@react-native-community/datetimepicker": "^3.5.2",
     "@react-native-picker/picker": "^1.16.1",
+    "lottie-react-native": "^4.0.2",
     "react": "17.0.1",
     "react-native": "0.64.2",
     "react-native-push-notification": "^7.3.1",

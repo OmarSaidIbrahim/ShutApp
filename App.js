@@ -12,6 +12,7 @@ import {
 import NotifService from './NotifService';
 import Sound from 'react-native-sound';
 import DateTimePicker from '@react-native-community/datetimepicker';
+import LottieView from 'lottie-react-native';
 
 
 
@@ -82,6 +83,11 @@ export default class App extends Component {
           />
         )}
         <Text>{this.state.date.toLocaleString()}</Text>
+        
+        <View style={{ width: 200, height: 200}}>
+          <LottieView source={require('./animation.json')} autoPlay loop />
+        </View>
+        
       </View>
     );
   }
