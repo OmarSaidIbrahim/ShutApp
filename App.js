@@ -14,6 +14,7 @@ import Sound from 'react-native-sound';
 import DateTimePicker from '@react-native-community/datetimepicker';
 
 
+
 export default class App extends Component {
   constructor(props) {
     super(props);
@@ -30,11 +31,13 @@ export default class App extends Component {
     );
 
     this.sound = new Sound('shutup.mp3');
+    this.setState.bind({date: this.state.date.setSeconds(0)})
   }
 
   onChange = (event, selectedDate) => {
     const currentDate = selectedDate || this.state.date;
     this.setState({show: Platform.OS === 'ios', date: currentDate});
+    this.notif.scheduleNotif('shutup.mp3', this.state.date);
   };
 
   showMode = (currentMode) => {
@@ -60,7 +63,7 @@ export default class App extends Component {
           ShutApp
         </Text>
         <Text style={{marginVertical: 20}}>How many times do I need to remind you to shut up ?</Text>
-        <Text>Every: </Text>
+        <Text>Set the goddam time: </Text>
         <View>
           <Button onPress={this.showDatepicker} title="Show date picker!" />
         </View>
@@ -143,6 +146,5 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     fontSize: 50,
     textAlign: 'center',
-    color: "purple"
   },
 });
