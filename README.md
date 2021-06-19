@@ -12,3 +12,7 @@ https://github.com/zmxv/react-native-sound
 to play any mp3 file.
 
 As usual, logic first and then graphic.
+
+Lottie Files from my previous project has been added. Below the Graphic.
+
+
