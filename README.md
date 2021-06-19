@@ -16,3 +16,7 @@ As usual, logic first and then graphic.
 Lottie Files from my previous project has been added. Below the Graphic.
 
 
+
+https://user-images.githubusercontent.com/32266102/122642435-4a341880-d102-11eb-9fb3-fa36747b4a7d.mp4
+
+
