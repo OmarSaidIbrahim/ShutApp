@@ -7,14 +7,14 @@ import {
   TouchableOpacity,
   Alert,
   Platform,
-  Button
+  Button,
+  Animated,
+  Image
 } from 'react-native';
 import NotifService from './NotifService';
 import Sound from 'react-native-sound';
 import DateTimePicker from '@react-native-community/datetimepicker';
 import LottieView from 'lottie-react-native';
-
-
 
 export default class App extends Component {
   constructor(props) {
@@ -23,7 +23,12 @@ export default class App extends Component {
     this.state = {
       date: new Date(),
       mode: 'date',
-      show: false
+      show: false,
+      fadeAnimation: new Animated.Value(0),
+      fadeAnimation2: new Animated.Value(0),
+      opacity: 0,
+      opacity2: new Animated.Value(0),
+      playAnimation: false
     };
 
     this.notif = new NotifService(
@@ -57,10 +62,93 @@ export default class App extends Component {
     this.sound.play()
   }
 
+  fadeIn = () => {
+    Animated.timing(this.state.fadeAnimation, {
+      toValue: 1,
+      duration: 2000,
+      useNativeDriver: true,
+    }).start(this.fadeOut);
+  };
+
+  fadeOut = () => {
+    Animated.timing(this.state.fadeAnimation, {
+      toValue: 0,
+      duration: 2000,
+      useNativeDriver: true,
+    }).start();
+  };
+
+  componentDidMount(){
+    this.introductions()
+  }
+
+  introductions = () => {
+    this.fadeIn()
+
+    setInterval(() => {
+      this.setState({opacity: 1, playAnimation: true})
+    }, 4000)
+
+    setInterval(() => {
+      Animated.timing(this.state.opacity2, {
+        toValue: 1,
+        duration: 2000,
+        useNativeDriver: true,
+      }).start();
+    }, 14000)
+    //play lottiefile
+  }
+
   render() {
     return (
       <View style={styles.container}>
-        <Text style={styles.title}>
+
+        <Animated.View style={{opacity: this.state.fadeAnimation, justifyContent: "center", alignItems: "center"}}>
+          <Image
+            style={styles.logo}
+            source={require('./images/my-icon.png')}
+            tintColor="white"
+          />
+          <Text style={styles.headline}>A doggo development{"\n"}presents</Text>
+        </Animated.View>
+
+        {this.state.playAnimation ? 
+        <View style={{ width: '100%', height: '100%', position: "absolute", opacity: this.state.opacity}}>
+          <LottieView source={require('./background.json')} autoPlay loop={false} resizeMode='cover' />
+        </View>
+        : null}
+
+        <Animated.View style={{position: "absolute",top:0, left:0, right:0, bottom: 0, opacity: this.state.opacity2, justifyContent: "center", alignItems: "center"}}>
+          <Text style={styles.title}>SHUT APP</Text>
+          <Text style={{margin: 20, color: "white", fontSize: 20}}>When do I need to remind you to shut up ?</Text>
+          
+          {/*<View>
+            <Button onPress={this.showDatepicker} title="Show date picker!" />
+          </View>*/}
+          <TouchableOpacity onPress={this.showTimepicker} style={{backgroundColor: "black", justifyContent: "center", alignItems: "center", borderWidth: 2, borderColor: "white"}}>
+            <Text style={{color:"white", fontSize: 20, padding: 20}}>Set the goddam time</Text>
+          </TouchableOpacity>
+          {this.state.show && (
+            <DateTimePicker
+              testID="dateTimePicker"
+              value={this.state.date}
+              mode={this.state.mode}
+              is24Hour={true}
+              display="default"
+              onChange={this.onChange}
+              minimumDate={new Date()}
+            />
+          )}
+          {/*<Text style={{color: "white"}}>{this.state.date.toLocaleString()}</Text>*/}
+        </Animated.View>
+
+      </View>
+    );
+  }
+
+  /*
+  
+  <Text style={styles.title}>
           ShutApp
         </Text>
         <Text style={{marginVertical: 20}}>How many times do I need to remind you to shut up ?</Text>
@@ -83,16 +171,6 @@ export default class App extends Component {
           />
         )}
         <Text>{this.state.date.toLocaleString()}</Text>
-        
-        <View style={{ width: 200, height: 200}}>
-          <LottieView source={require('./animation.json')} autoPlay loop />
-        </View>
-        
-      </View>
-    );
-  }
-
-  /*
   <TouchableOpacity
           style={styles.button}
           onPress={() => {
@@ -144,13 +222,22 @@ export default class App extends Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    //justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: 'white',
+    backgroundColor: 'black',
   },
   title: {
     fontWeight: 'bold',
     fontSize: 50,
     textAlign: 'center',
+    color: "white"
+  },
+  headline: {
+    fontSize: 25,
+    textAlign: "center",
+    color: "white"
+  },
+  logo: {
+    width: 180,
+    height: 150,
+    marginVertical: "20%"
   },
 });
